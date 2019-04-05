@@ -61,9 +61,12 @@ CSV > Google Storage > Google DataFlow > Google BigQuery
 
 #### 5.1 Dataflow
 
-![alt text](dataflow.png "Imagem Arquitetura")
+##### Telas do Dataflow na execução do job
+![alt text](dataflow.png "Imagem Dataflow")
 
-#### Para implementação após todo setup do google listados no ponto 5.1, temos os seguintes arquivos:
+![alt text](dataflow3.png "Imagem Dataflow3")
+
+#### Para implementação após todo setup do google listados no ponto 6, temos os seguintes arquivos:
 
 ##### Exemplo com csv que deve ser importado no bucket do seu google storage:
 
@@ -103,7 +106,11 @@ https://beam.apache.org/documentation/io/built-in/google-bigquery/
 python storage-to-dataflow-to-bigquery.py --input gs://b2w-americanas-teste-bucket-navigation/dados_navegacionais* --output b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION --runner DataflowRunner --project b2w-americanas-teste --job_name b2w-americanas-raw-nav-data-0001 --temp_location gs://b2w-americanas-teste-bucket-navigation/tmp/
 ```
 
+##### Execução no terminal:
+
 #### 5.2 BigQuery
+
+![alt text](bigquery1.png "Imagem bigquery")
 
 Foia criada seguinte view b2w-americanas-teste:dataNavigationDataSet.SalesKPI, com os indicadores mais relevantes:
 ```sql
@@ -147,8 +154,10 @@ where page_type = 'thankyou') thankyou
 
 #### 5.3 DataStudio
 ##### Exemplo de de possiveis dashboards e relatórios que podem ser criados:
-
+![alt text](datastudio.png "Imagem datastudio")
 ##### Dashboard principal
+![alt text](datastudio2.png "Imagem datastudio")
+
 
 
 
