@@ -10,6 +10,7 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 
 1. Arquitetura Proposta
 2. Motivação da Arquitetura
+3. Fluxo Principal
 3. Motivação Pessoal para Arquitetura
 4. Implementação
 5. Proposta de Evolução
@@ -19,27 +20,37 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 
 ![alt text](https://raw.githubusercontent.com/samueljb/my-tests2/master/csv_file_to_bigquery_pt.png "Imagem Arquitetura")
 
-> Basicamente o Google DataFlow é o orquestrador, job em Python, que pega os arquivos CSVs adicionados no bucket do Google Storage, transforma no formato reconhecido e adiciona na tabela do BigQuery. 
+#### Abaixo uma breve descrição de cada step e seu devido marketing.
 
-> Com os dados na tabela do BigQuery podemos criar transformações utilizando comandos SQLs, criando views e nossos KPIs(indicadores) que serão compartilhadas no google DataStudio para visualização dos Gestores da empresa.
++ [Google DataFlow](https://cloud.google.com/dataflow/?hl=pt-br), nosso orquestrador responsável pela gestão da pipeline dos dados,
+> Processamento simplificado de dados de stream e em lote, com a mesma confiabilidade e expressividade
++ [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), nosso storage de arquivos.
+> Armazenamento unificado de objetos para desenvolvedores e empresas
++ [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br), nosso banco de dados.
+> Um armazenamento de dados na nuvem rápido, altamente dimensionável, econômico e totalmente gerenciado para análise com machine learning.
++ [DataStudio](https://datastudio.google.com/), nossa ferramenta para criação de relatórios. 
+> Desbloqueie o poder de seus dados com painéis interativos e relatórios bonitos que inspiram decisões de negócios mais inteligentes.
 
-#### 1.1 O Google Dataflow 
-##### Será o orquestrador de toda execução, será criado um job em python que fará a captura do arquivo bucket do Google Storage, traformar o mesmo e inserir na Tabela do BigQuery responsável pela: 
-Gestão da pipeline dos dados, sendo possivel executar poderosas tranformações dos dados, com poucas linhas de códigos.
-Gerenciamento de Recursos, instanciando CPUs, conforme a necessidade, conforme a google diz "Recursos praticamente ilimitados"
+### 2. Motivação da Proposta
+Essa arquitetura basicamente cobre os requisitos do cliente e outros como escalabilidade sob demanda, modelo de programação simplificado e opensource, controle de custo, gerenciamento automático de recursos, que conforme a google diz:
+> "Recursos praticamente ilimitados".
 
+### 3. Fluxo Principal
 
-#### 1. Arquitetura Proposta
+> Basicamente o [Google DataFlow](https://cloud.google.com/dataflow/?hl=pt-br) é o orquestrador, nesse exemplo é um job em Python, que pega os arquivos CSVs adicionados no bucket do [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), transforma no formato reconhecido e adiciona na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br). 
 
+> Com os dados na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) podemos criar transformações utilizando comandos SQLs, criando views e nossos KPIs(indicadores) que serão compartilhadas no google [DataStudio](https://datastudio.google.com/) com uma estética de Relatório e Dashboards para visualização dos Gestores da empresa.
 
-#### 1. Motivação Pessoal para Arquitetura
+### 3. Motivação Pessoal para Arquitetura
 
-##### 1.1 Porque desenhar toda solução na núvem e não localmente ?
+##### 3.1 Porque desenhar toda solução na núvem e não localmente ?
 Como meu computador não é muito, experimentar qualquer solução localmente seria lastimável. 
-##### 1.2 Porque utilizando o Google Cloud ?
+##### 3.2 Porque utilizando o Google Cloud ?
 Escolhi o google por já ter bastante contato toda solução Cloud do [Firebase](https://firebase.google.com) para um projeto pessoal com IONIC. Também porque eu ganhei um voucher por 6 meses para utilizar todos o serviços do Google Cloud gratuitamente.
-##### 1.2 Porque utilizar Python e não Java ?
+##### 3.2 Porque utilizar Python e não Java ?
 Porque Java eu já tenho bastante experiência e Python para esse tipo de projeto eu teria um código mais limpo.
+##### 3.2 Porque utilizar Google DataStudio ?
+Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios é muito limitada, indicaria soluções como Tableau, SAP BO, SAS entre outros, dependeria do orçamento.
 
 de tratame para ingestão de dados utilizando o [Google Fataflow](https://cloud.google.com/dataflow/).
 CSV > Google Storage > Google DataFlow > Google BigQuery
