@@ -98,17 +98,18 @@ https://beam.apache.org/documentation/io/built-in/google-bigquery/
 
 + 5.1.1 Criar conta no [Google Cloud](https://console.cloud.google.com/?_ga=2.266585353.-640181581.1548091189), a partir desse console você vai poder criar o seu projeto.
 + 5.1.2 Criar [o seu projeto no seu console](https://console.cloud.google.com/cloud-resource-manager?_ga=2.260162954.-640181581.1548091189), esse ponto é importante pois todos os itens deve ser criados dentro desse projeto.
-+ 5.1.3 Criar [um bucket no Google Storage](https://console.cloud.google.com/storage/browser?_ga=2.25283386.-640181581.1548091189) e adicionar o CSV, isso tudo pode ser feito visualmente.
-+ 5.1.4 Criar apenas o [dataset no Google BigQuery](https://bigquery.cloud.google.com/?hl=pt-br) , pois em nosso script a tabela é criada caso não exista.
++ 5.1.3 Ativar no projeto e criar [um bucket no Google Storage](https://console.cloud.google.com/storage/browser?_ga=2.25283386.-640181581.1548091189) e adicionar o CSV, isso tudo pode ser feito visualmente.
++ 5.1.4 Ativar no projeto criar apenas o [dataset no Google BigQuery](https://bigquery.cloud.google.com/?hl=pt-br) , pois em nosso script a tabela é criada caso não exista.
 + 5.1.5 Acessar [o terminal remoto do seu projeto](https://cloud.google.com/shell/)
-+ 5.1.6 Acessar e [ativar o Google Dataflow](https://console.cloud.google.com/dataflow?_ga=2.22120508.-640181581.1548091189)
++ 5.1.6 Acessar [ativar o Google Dataflow](https://console.cloud.google.com/dataflow?_ga=2.22120508.-640181581.1548091189) para monitorar a execução da pipeline.
 
 ### 5.2 Execução
 
-Executar o comando abaixo substituindo as seguintes variáveis, inclusive as [], por:
-[NOME_SEU_DATA_PROJETO], nome do projeto criado no 
-[NOME_SEU_DATA_SET]
-[NOME_SEU_BUCKET]
+##### Executar o comando abaixo no terminar do ponto 5.1.5, substituindo as seguintes variáveis, por:
+> NOME_SEU_DATA_PROJETO, nome do projeto criado no ponto 5.1.2
+> NOME_SEU_BUCKET, nome do bucket criado no ponto 5.1.3.
+> NOME_SEU_DATA_SET, nome do dataset criado no ponto 5.1.4.
 
-Dentro do seu terminal remoto, execute o seguinte comando:
+```python
 python storage-to-dataflow-to-bigquery.py --input gs://NOME_SEU_BUCKET/dados_navegacionais* --output NOME_SEU_DATA_PROJETO:NOME_SEU_DATA_SET.RAW_DATA_NAVIGATION --runner DataflowRunner --project NOME_SEU_DATA_PROJETO --job_name job-name-001 --temp_location gs://NOME_SEU_BUCKET/tmp/
+```
