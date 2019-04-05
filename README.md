@@ -56,8 +56,44 @@ Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios
 de tratame para ingestão de dados utilizando o [Google Fataflow](https://cloud.google.com/dataflow/).
 CSV > Google Storage > Google DataFlow > Google BigQuery
 
+
 ### 5. Implementação
 
+#### Para implementação após todo setup do google listados no ponto 5.1, temos os seguintes arquivos:
+
+##### Exemplo com csv que deve ser importado no bucket do seu google storage:
+
+> [dados_navigacionais_100.csv](dados_navigacionais_100.csv)
+
+#####  Arquivo python com a implementação do JOB para rodar no Google Dataflow:
+
+> [storage-to-dataflow-to-bigquery.py](storage-to-dataflow-to-bigquery.py)
+
+Com os seguintes pontos importantes, para customização do script:
+
+Linha 121: A separação dos campos no CSV e os tipos de cada um, para criação da tabela do banco.
+```python
+schema='load_timestamp:STRING,ip:STRING,visit_id:STRING,device_type:STRING,url_location:STRING,page_type:STRING,search_query:STRING,product_id:STRING,site_department_id:STRING,product_unit_price:STRING,freight_delivery_time:STRING,freight_value:STRING,cart_qty:STRING,cart_total_value:STRING',
+```
+Os tipos são os mesmos do SCHEMA das tabelas do BigQuery.
+
+Linha 38: Pega as linhas do CSV e transforma no formato entendível pelo BigQuery, informando a ordem dos campos no CSV.
+```python
+    row = dict( zip(('load_timestamp', 'ip', 'visit_id', 'device_type', 'url_location', 'page_type', 'search_query', 'product_id', 'site_department_id', 'product_unit_price', 'freight_delivery_time', 'freight_value', 'cart_qty', 'cart_total_value'),
+                values))
+```
+
+Linha 104:  CREATE_IF_NEEDED cria a tabela caso não exista.
+Linha 106:  WRITE_TRUNCATE apaga a tabela caso exista e insira, esta assim a título de exemplo mas deveria ser: WRITE_APPEND
+```python
+            create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
+            # Deletes all data in the BigQuery table before writing.
+            write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE)))
+```
+Aqui você pode ver mais detalhes desse parâmetros:
+https://beam.apache.org/documentation/io/built-in/google-bigquery/
+
+            
 ### 5.1 Pre-Requisitos
 
 + 5.1.1 Criar conta no [Google Cloud](https://console.cloud.google.com/?_ga=2.266585353.-640181581.1548091189), a partir desse console você vai poder criar o seu projeto.
@@ -74,5 +110,5 @@ Executar o comando abaixo substituindo as seguintes variáveis, inclusive as [],
 [NOME_SEU_DATA_SET]
 [NOME_SEU_BUCKET]
 
-Dentro do seu seu terminal remoto, execute o seguinte comando:
-python storage-to-dataflow-to-bigquery.py --input gs://[NOME_SEU_BUCKET]/dados_navegacionais* --output [NOME_SEU_DATA_PROJETO]:[NOME_SEU_DATA_SET].RAW_DATA_NAVIGATION --runner DataflowRunner --project [NOME_SEU_DATA_PROJETO] --job_name job-name-001 --temp_location gs://[NOME_SEU_BUCKET]/tmp/
+Dentro do seu terminal remoto, execute o seguinte comando:
+python storage-to-dataflow-to-bigquery.py --input gs://NOME_SEU_BUCKET/dados_navegacionais* --output NOME_SEU_DATA_PROJETO:NOME_SEU_DATA_SET.RAW_DATA_NAVIGATION --runner DataflowRunner --project NOME_SEU_DATA_PROJETO --job_name job-name-001 --temp_location gs://NOME_SEU_BUCKET/tmp/
