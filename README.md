@@ -59,6 +59,8 @@ CSV > Google Storage > Google DataFlow > Google BigQuery
 
 ### 5. Implementação
 
+#### 5.1 Dataflow
+
 #### Para implementação após todo setup do google listados no ponto 5.1, temos os seguintes arquivos:
 
 ##### Exemplo com csv que deve ser importado no bucket do seu google storage:
@@ -93,6 +95,48 @@ Linha 106:  WRITE_TRUNCATE apaga a tabela caso exista e insira, esta assim a tí
 Aqui você pode ver mais detalhes desse parâmetros:
 https://beam.apache.org/documentation/io/built-in/google-bigquery/
 
+
+#### 5.2 BigQuery
+
+Foia criada seguinte view b2w-americanas-teste:dataNavigationDataSet.SalesKPI, com os indicadores mais relevantes:
+```sql
+    SELECT  'Abandono de Carrinho de compras' as Description, basket.losing as q1, thankyou.buy as q2, 100-ROUND((thankyou.buy / basket.losing)*100, 2) as rate  FROM
+(SELECT count(distinct visit_id) as losing FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'basket') basket
+CROSS JOIN
+(SELECT count(distinct visit_id) as buy FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'thankyou') thankyou
+union all
+SELECT  'Taxa de conversão vindo da home', home.visit, thankyou.buy, ROUND((thankyou.buy / home.visit)*100, 2) as conversion_rate_home  FROM
+(SELECT count(distinct visit_id) as visit FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'home') home
+CROSS JOIN
+(SELECT count(distinct visit_id) as buy FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'thankyou') thankyou
+union all
+SELECT  'Taxa de conversão vindo da Busca', home.visit, thankyou.buy, ROUND((thankyou.buy / home.visit)*100, 2) as conversion_rate_home  FROM
+(SELECT count(distinct visit_id) as visit FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'search') home
+CROSS JOIN
+(SELECT count(distinct visit_id) as buy FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'thankyou') thankyou
+union all
+SELECT  'Taxa de conversão vindo do Produto', home.visit, thankyou.buy, ROUND((thankyou.buy / home.visit)*100, 2) as conversion_rate_home  FROM
+(SELECT count(distinct visit_id) as visit FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'product') home
+CROSS JOIN
+(SELECT count(distinct visit_id) as buy FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'thankyou') thankyou
+union all
+SELECT  'Não pagamento - Desistencia', home.visit, thankyou.buy, 100-ROUND((thankyou.buy / home.visit)*100, 2) as conversion_rate_home  FROM
+(SELECT count(distinct visit_id) as visit FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'payment') home
+CROSS JOIN
+(SELECT count(distinct visit_id) as buy FROM `b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION` 
+where page_type = 'thankyou') thankyou
+
+
+```
 
 ### 6 Execução
 
