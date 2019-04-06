@@ -1,8 +1,8 @@
-# Solução simples de importação e geração indicadores de grande volumes de dados no Google Cloud
+# Solução auto escalável de importação de CSV e geração indicadores de dados utilizando todo ecosistema do Google Cloud
 ### Repositório criado com objetivo de compartilhar solução desde as motivações da arquitetura até a implementação. 
 #### Motivação: Cliente possui site que a cada 1 minuto gera um arquivo de log no formato CSV de 400 MB. 
-Esse arquivo possui todo ciclo de navegação de cada cliente desde o acesso inicial ao site até o pagamento. 
-#### Desafio: Desenhar solução escalável que leia esses arquivos e que se consiga extrair informações relevantes para o clientes, como: 
+Esse arquivo possui log do todo ciclo de navegação de cada cliente desde o acesso inicial ao site até o pagamento. 
+#### Desafio: Desenhar solução escalável que leia esses arquivos e que se consiga extrair informações relevantes para o cliente, como: 
 KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compras entre outros. 
 
 
@@ -19,7 +19,6 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 ### 1. Arquitetura Proposta
 
 ![alt text](workflow-overview.png "Imagem Arquitetura")
-
 
 
 ### 1.2 Fluxo Principal
@@ -66,14 +65,16 @@ Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios
 
 ### 4. Execução da pipeline
 
-1.1.
-Para essa essa arquitetura priorizamos não obrigar instalar nenhuma biblioteca ou ferramenta localmente, tudo será instalado na núvem.  
-Cobre requisitos do cliente e outros como escalabilidade sob demanda, modelo de programação simplificado e opensource, controle de custo, gerenciamento automático de recursos, que conforme a google diz:
-> "Recursos praticamente ilimitados".
+Siga os passos abaixo para simular toda execução da pipiline. Desde a adição do arquivo no bucket até a atualização da view no BigQuery com os indicadores.
 
-### 7. Implementação
+4.1 Acessar o [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), em aba anomima com o usuário e senha enviados por email.
+4.1 Acessar o [Google Storage](https://cloud.google.com/storage/?hl=pt-Br) em aba anomima com o usuário e senha enviados por email.
+4.1 Para execução acessar o google em aba anomima com o usuário e senha enviados por email:
 
-#### 7.1 Dataflow
+
+### 5. Implementação
+
+#### 5.1 Dataflow
 
 ##### Telas do Dataflow na execução do job
 ![alt text](dataflow.png "Imagem Dataflow")
@@ -120,9 +121,7 @@ https://beam.apache.org/documentation/io/built-in/google-bigquery/
 python storage-to-dataflow-to-bigquery.py --input gs://b2w-americanas-teste-bucket-navigation/dados_navegacionais* --output b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION --runner DataflowRunner --project b2w-americanas-teste --job_name b2w-americanas-raw-nav-data-0001 --temp_location gs://b2w-americanas-teste-bucket-navigation/tmp/
 ```
 
-##### Detalhes:
-
-#### 7.2 BigQuery
+#### 5.2 BigQuery
 
 ![alt text](bigquery1.png "Imagem bigquery")
 
@@ -166,8 +165,25 @@ where page_type = 'thankyou') thankyou
 
 ```
 
-#### 7.3 DataStudio
+#### 5.3 DataStudio
 ##### Exemplo de de possiveis dashboards e relatórios que podem ser criados:
 ![alt text](datastudio.png "Imagem datastudio")
 ##### Dashboard principal
 ![alt text](datastudio2.png "Imagem datastudio")
+
+### 6 Referencias
+
+#### gcp-batch-ingestion-pipeline-python
+https://github.com/servian/gcp-batch-ingestion-pipeline-python
+
+#### Triggering DAGs (workflows)
+https://cloud.google.com/composer/docs/how-to/using/triggering-with-gcf
+
+#### Cloud Composer Examples
+https://github.com/GoogleCloudPlatform/professional-services/tree/master/examples/cloud-composer-examples
+
+#### Triggering a Cloud Composer DAG from Cloud Functions
+https://github.com/GoogleCloudPlatform/nodejs-docs-samples/tree/058f03387f7acbec25b2ac363c3fe584572e1777/functions/composer-storage-trigger
+
+#### Orchestrating jobs with Apache Airflow/Cloud Composer
+https://hcoelho.com/blog/63/Orchestrating_jobs_with_Apache_Airflow_Cloud_Composer
