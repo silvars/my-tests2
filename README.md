@@ -62,9 +62,11 @@ Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios
 
 ### 3. Execução da pipeline
 
-Siga os passos abaixo para simular toda execução da pipeline. Desde a adição do CSV no bucket até a atualização da view no BigQuery com os indicadores.
+Siga os passos abaixo aonde iremos simular toda execução da pipeline inserindo um arquivo no bucket b2w-americanas-teste, visualizando desde a adição do CSV no bucket até a atualização da view no BigQuery com os indicadores.
 
-3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
+Acesse os links abaixo utilizando o usuário e senha fornecido por email.
+
+3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true) utilizando o 
 
 3.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
 ```console
