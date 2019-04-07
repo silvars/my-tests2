@@ -68,9 +68,9 @@ Acesse os links abaixo utilizando o usuário e senha fornecido por email.
 
 3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true) utilizando o 
 
-3.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
+3.2. Execute o seguinte comando para copiar um CSV da pasta do bucket temp para a pasta que esta sendo monitorada pelo Cloud Functions:
 ```console
-gsutil mv -p gs://b2w-americanas-teste-bucket-navi-out/success/2019-04-06/dados_navegacionais* gs://b2w-americanas-teste
+gsutil cp -p gs://b2w-americanas-teste-bucket-navi-temp/dados_navegacionais_p1.csv gs://"b2w-americanas-teste/dados_navegacionais_p1.csv"
 
 ```
 3.3. Veja o acionamento do trigger no [Cloud Functions](https://console.cloud.google.com/functions/details/us-central1/call-composer-on-file?project=b2w-americanas-teste&folder&organizationId&tab=general&duration=PT1H).
