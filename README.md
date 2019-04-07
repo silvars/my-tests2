@@ -26,7 +26,7 @@ A arquitetura tem o seguinte fluxo principal:
 1. A função [index.js](index.js) no [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br) fica monitorando o bucket b2w-americanas-teste a procura por novos arquivos adicionados no [Google Storage](https://cloud.google.com/storage/?hl=pt-Br)
 2. Essa função tem uma trigger que é informada quando um novo arquivo é adicionado no bucket, logo, acionando o orquestrador [simple_load_dag.py](simple_load_dag.py) no [Google Composer](https://cloud.google.com/composer/?hl=pt-br).  
 3. [Google Composer](https://cloud.google.com/composer/?hl=pt-br) executa o script python [storage-to-dataflow-to-bigquery.py](storage-to-dataflow-to-bigquery.py) no [Google DataFlow](https://cloud.google.com/dataflow/?hl=pt-br), que é a nossa pipeline,  que pega os arquivos CSVs adicionados no bucket transforma no formato conhecido e adiciona na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br).
-4. Inserindo os do CSV na tabela b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br), dando tudo certo, o [Google Composer](https://cloud.google.com/composer/?hl=pt-br), move o CSV para o bucket b2w-americanas-teste-bucket-navi-out.   
+4. Inserindo cada linha e campo do CSV na tabela b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br), dando tudo certo, o [Google Composer](https://cloud.google.com/composer/?hl=pt-br), move o CSV para o bucket b2w-americanas-teste-bucket-navi-out.   
 5. A view [SalesKPI.sql](SalesKPI.sql) criada [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) possui indicadores relevantes para o projeto.
 6. Essa view é acessada pelo Google [DataStudio](https://datastudio.google.com/) gerando [relatório](datastudio2.png) e os [indicadores](datastudio.png).
 
@@ -92,13 +92,11 @@ gsutil cp -p gs://b2w-americanas-teste-bucket-navi-temp/dados_navegacionais_p1.c
 
 ![alt text](dataflow3.png "Imagem Dataflow3")
 
-#### Para implementação após todo setup do google listados no ponto 6, temos os seguintes arquivos:
-
 ##### Exemplo com csv que deve ser importado no bucket do seu google storage:
 
 > [dados_navigacionais_100.csv](dados_navigacionais_100.csv)
 
-#####  Arquivo python com a implementação do JOB para rodar no Google Dataflow:
+##### Exemplo arquivo python com a implementação do JOB para rodar no Google Dataflow:
 
 > [storage-to-dataflow-to-bigquery.py](storage-to-dataflow-to-bigquery.py)
 
@@ -117,7 +115,7 @@ Linha 38: Pega as linhas do CSV e transforma no formato entendível pelo BigQuer
 ```
 
 Linha 104:  CREATE_IF_NEEDED cria a tabela caso não exista.
-Linha 106:  WRITE_TRUNCATE apaga a tabela caso exista e insira, esta assim a título de exemplo mas deveria ser: WRITE_APPEND
+Linha 106:  WRITE_TRUNCATE apaga a tabela caso exista e insira, esta assim a título de exemplo, mas deveria ser: WRITE_APPEND
 ```python
             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
             # Deletes all data in the BigQuery table before writing.
