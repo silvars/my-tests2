@@ -9,11 +9,10 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 ### O escopo desse documento se divide nos seguintes tópicos.
 
 #### 1. Arquitetura Proposta
-#### 2. Abaixo uma breve descrição de cada step na sua ordem de chamada, com seu devido marketing.
-#### 3. Motivação da Proposta
-#### 4. Execução da pipeline
-#### 5. Implementação
-
+#### 2. Motivação da Proposta
+#### 3. Execução da pipeline
+#### 4. Implementação
+#### 5. Referencias
 
 ### 1. Arquitetura Proposta
 
@@ -32,7 +31,7 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 6. Foi criada a view [SalesKPI.sql](SalesKPI.sql) no [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) com indicadores relevantes para o projeto, sendo essa view lida no nesse exemplo é um job em Python, que pega os arquivos CSVs adicionados no bucket do , transforma no formato reconhecido e adiciona na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br). 
 7. Essa view é acessada pelo Google [DataStudio](https://datastudio.google.com/) gerando [relatório](datastudio2.png) e os [indicadores](datastudio.png).
 
-### 2 Abaixo uma breve descrição de cada step na sua ordem de chamada, com seu devido marketing.
+### 1.3 Breve descrição de cada step na sua ordem de chamada, com seu devido google marketing.
 + [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), nosso storage aonde colocaremos nossos arquivos CSV para serem processados.
 > Armazenamento unificado de objetos para desenvolvedores e empresas
 + [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br), nossa trigger que avisa quando um novo arquivo for adicinado no bucket. 
@@ -46,45 +45,45 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 + [DataStudio](https://datastudio.google.com/), nossa ferramenta para criação de relatórios. 
 > Desbloqueie o poder de seus dados com painéis interativos e relatórios bonitos que inspiram decisões de negócios mais inteligentes.
 
-### 3 Motivação da Proposta
+### 2 Motivação da Proposta
 Para essa essa arquitetura priorizamos não obrigar instalar nenhuma biblioteca ou ferramenta localmente, tudo será instalado na núvem.  
 Cobre requisitos do cliente e outros como escalabilidade sob demanda, modelo de programação simplificado e opensource, controle de custo, gerenciamento automático de recursos, que conforme a google diz:
 > "Recursos praticamente ilimitados".
 
-### 3.1 Motivação Pessoal para Arquitetura
+### 2.1 Motivação Pessoal para Arquitetura
 
-##### 3.1.1 Porque desenhar toda solução na núvem e não localmente ?
+##### 2.1.1 Porque desenhar toda solução na núvem e não localmente ?
 Como meu computador não é muito, experimentar qualquer solução localmente seria lastimável. 
-##### 3.1.2 Porque utilizando o Google Cloud ?
+##### 2.1.2 Porque utilizando o Google Cloud ?
 Escolhi o google por já ter bastante contato toda solução Cloud do [Firebase](https://firebase.google.com) para um projeto pessoal com IONIC. Também porque eu ganhei um voucher por 6 meses para utilizar todos o serviços do Google Cloud gratuitamente.
-##### 3.1.3 Porque utilizar Python e não Java ?
+##### 2.1.3 Porque utilizar Python e não Java ?
 Porque Java eu já tenho bastante experiência e Python para esse tipo de projeto eu teria um código mais limpo.
-##### 3.1.4 Porque utilizar Google DataStudio ?
+##### 2.1.4 Porque utilizar Google DataStudio ?
 Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios é muito limitada, indicaria soluções como Tableau, SAP BO, SAS entre outros, dependeria do orçamento.
 
-### 4. Execução da pipeline
+### 3. Execução da pipeline
 
 Siga os passos abaixo para simular toda execução da pipeline. Desde a adição do CSV no bucket até a atualização da view no BigQuery com os indicadores.
 
-4.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
-4.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
+3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
+3.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
 ```console
 gsutil mv -p gs://b2w-americanas-teste-bucket-navi-out/success/2019-04-06/dados_navegacionais* gs://b2w-americanas-teste
 
 ```
-4.3. Veja o acionamento do trigger no [Cloud Functions](https://console.cloud.google.com/functions/details/us-central1/call-composer-on-file?project=b2w-americanas-teste&folder&organizationId&tab=general&duration=PT1H).
+3.3. Veja o acionamento do trigger no [Cloud Functions](https://console.cloud.google.com/functions/details/us-central1/call-composer-on-file?project=b2w-americanas-teste&folder&organizationId&tab=general&duration=PT1H).
 
-4.4. Veja que o [Google Composer esta up](https://console.cloud.google.com/composer/environments?_ga=2.231835800.-640181581.1548091189&project=b2w-americanas-teste) , caso queira veja o log.
+3.4. Veja que o [Google Composer esta up](https://console.cloud.google.com/composer/environments?_ga=2.231835800.-640181581.1548091189&project=b2w-americanas-teste) , caso queira veja o log.
 
-4.5. Veja que a pipeline foi iniciada no [Google Dataflow](https://console.cloud.google.com/dataflow?project=b2w-americanas-teste&folder&organizationId), aguarde o job finalizar.
+3.5. Veja que a pipeline foi iniciada no [Google Dataflow](https://console.cloud.google.com/dataflow?project=b2w-americanas-teste&folder&organizationId), aguarde o job finalizar.
 
-4.6. Veja a tabela de kpi ser atualizada [BigQuery](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721), veja tambem a [tabela com todos os dados](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d)
+3.6. Veja a tabela de kpi ser atualizada [BigQuery](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721), veja tambem a [tabela com todos os dados](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d)
 
-4.7. Veja os arquivos processados foram apagadas do bucket [b2w-americanas-teste](https://console.cloud.google.com/storage/browser/b2w-americanas-teste?project=b2w-americanas-teste) movidos para o bucket [b2w-americanas-teste-bucket-navi-out](https://console.cloud.google.com/storage/browser/b2w-americanas-teste-bucket-navi-out?project=b2w-americanas-teste)
+3.7. Veja os arquivos processados foram apagadas do bucket [b2w-americanas-teste](https://console.cloud.google.com/storage/browser/b2w-americanas-teste?project=b2w-americanas-teste) movidos para o bucket [b2w-americanas-teste-bucket-navi-out](https://console.cloud.google.com/storage/browser/b2w-americanas-teste-bucket-navi-out?project=b2w-americanas-teste)
 
-### 5. Implementação
+### 4. Implementação
 
-#### 5.1 Dataflow
+#### 4.1 Dataflow
 
 ##### Telas do Dataflow na execução do job
 ![alt text](dataflow.png "Imagem Dataflow")
@@ -131,7 +130,7 @@ https://beam.apache.org/documentation/io/built-in/google-bigquery/
 python storage-to-dataflow-to-bigquery.py --input gs://b2w-americanas-teste-bucket-navigation/dados_navegacionais* --output b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION --runner DataflowRunner --project b2w-americanas-teste --job_name b2w-americanas-raw-nav-data-0001 --temp_location gs://b2w-americanas-teste-bucket-navigation/tmp/
 ```
 
-#### 5.2 BigQuery
+#### 4.2 BigQuery
 
 ![alt text](bigquery1.png "Imagem bigquery")
 
@@ -175,13 +174,13 @@ where page_type = 'thankyou') thankyou
 
 ```
 
-#### 5.3 DataStudio
+#### 4.3 DataStudio
 ##### Exemplo de de possiveis dashboards e relatórios que podem ser criados:
 ![alt text](datastudio.png "Imagem datastudio")
 ##### Dashboard principal
 ![alt text](datastudio2.png "Imagem datastudio")
 
-### 6 Referencias
+### 5 Referencias
 
 #### gcp-batch-ingestion-pipeline-python
 https://github.com/servian/gcp-batch-ingestion-pipeline-python
