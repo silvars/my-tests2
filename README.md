@@ -21,7 +21,7 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 
 #### 1.2 Fluxo Principal
 
-> A arquitetura tem o seguinte fluxo principal:
+A arquitetura tem o seguinte fluxo principal:
 
 1. Existem a função [index.js](index.js) no [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br).
 2. Que fica monitorando o bucket b2w-americanas-teste a procura por novos arquivos adicionados no [Google Storage](https://cloud.google.com/storage/?hl=pt-Br)
@@ -66,6 +66,7 @@ Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios
 Siga os passos abaixo para simular toda execução da pipeline. Desde a adição do CSV no bucket até a atualização da view no BigQuery com os indicadores.
 
 3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
+
 3.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
 ```console
 gsutil mv -p gs://b2w-americanas-teste-bucket-navi-out/success/2019-04-06/dados_navegacionais* gs://b2w-americanas-teste
