@@ -1,19 +1,18 @@
 # Solução auto escalável de importação de CSV e geração indicadores utilizando todo ecosistema do Google Cloud
-### Repositório criado com objetivo de compartilhar solução desde as motivações da arquitetura até a implementação. 
+### Repositório criado com objetivo de detalhar solução, desde as motivações da arquitetura até a implementação. 
 #### Motivação: Cliente possui site que a cada 1 minuto gera um arquivo de log no formato CSV de 400 MB. 
-Esse arquivo possui log do todo ciclo de navegação de cada cliente desde o acesso inicial ao site até o pagamento. 
-#### Desafio: Desenhar solução escalável que leia esses arquivos e que se consiga extrair informações relevantes para o cliente, como: 
+Esse arquivo possui log eventos de todo ciclo de navegação de cada cliente desde o acesso inicial ao site até o pagamento. 
+#### Desafio: Desenhar solução escalável que leia esses arquivos para extrair informações relevantes para o cliente, como: 
 KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compras entre outros. 
 
 
 ### O escopo desse documento se divide nos seguintes tópicos.
 
-1. Arquitetura Proposta
-2. Motivação da Arquitetura
-3. Fluxo Principal
-4. Motivação Pessoal para Arquitetura
-5. Implementação
-6. Proposta de Evolução
+#### 1. Arquitetura Proposta
+#### 2. Abaixo uma breve descrição de cada step na sua ordem de chamada, com seu devido marketing.
+#### 3. Motivação da Proposta
+#### 4. Execução da pipeline
+#### 5. Implementação
 
 
 ### 1. Arquitetura Proposta
@@ -21,7 +20,7 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 ![alt text](workflow-overview.png "Imagem Arquitetura")
 
 
-### 1.2 Fluxo Principal
+#### 1.2 Fluxo Principal
 
 > A arquitetura tem o seguinte fluxo principal:
 
@@ -82,7 +81,6 @@ gsutil mv -p gs://b2w-americanas-teste-bucket-navi-out/success/2019-04-06/dados_
 4.6. Veja a tabela de kpi ser atualizada [BigQuery](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721), veja tambem a [tabela com todos os dados](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d)
 
 4.7. Veja os arquivos processados foram apagadas do bucket [b2w-americanas-teste](https://console.cloud.google.com/storage/browser/b2w-americanas-teste?project=b2w-americanas-teste) movidos para o bucket [b2w-americanas-teste-bucket-navi-out](https://console.cloud.google.com/storage/browser/b2w-americanas-teste-bucket-navi-out?project=b2w-americanas-teste)
-
 
 ### 5. Implementação
 
