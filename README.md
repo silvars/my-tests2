@@ -65,11 +65,23 @@ Utilizei aqui para simplificar o nosso exemplo, o customização dos relatórios
 
 ### 4. Execução da pipeline
 
-Siga os passos abaixo para simular toda execução da pipiline. Desde a adição do arquivo no bucket até a atualização da view no BigQuery com os indicadores.
+Siga os passos abaixo para simular toda execução da pipeline. Desde a adição do CSV no bucket até a atualização da view no BigQuery com os indicadores.
 
-4.1 Acessar o [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), em aba anomima com o usuário e senha enviados por email.
-4.1 Acessar o [Google Storage](https://cloud.google.com/storage/?hl=pt-Br) em aba anomima com o usuário e senha enviados por email.
-4.1 Para execução acessar o google em aba anomima com o usuário e senha enviados por email:
+4.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
+4.2. Execute o seguinte comando para mover o CSV já processado para a pasta que esta sendo monitorada pelo Cloud Functions:
+```console
+gsutil mv -p gs://b2w-americanas-teste-bucket-navi-out/success/2019-04-06/dados_navegacionais* gs://b2w-americanas-teste
+
+```
+4.3. Veja o acionamento do trigger no [Cloud Functions](https://console.cloud.google.com/functions/details/us-central1/call-composer-on-file?project=b2w-americanas-teste&folder&organizationId&tab=general&duration=PT1H).
+
+4.4. Veja que o [Google Composer esta up](https://console.cloud.google.com/composer/environments?_ga=2.231835800.-640181581.1548091189&project=b2w-americanas-teste) , caso queira veja o log.
+
+4.5. Veja que a pipeline foi iniciada no [Google Dataflow](https://console.cloud.google.com/dataflow?project=b2w-americanas-teste&folder&organizationId), aguarde o job finalizar.
+
+4.6. Veja a tabela de kpi ser atualizada [BigQuery](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721), veja tambem a [tabela com todos os dados](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d)
+
+4.7. Veja os arquivos processados foram apagadas do bucket [b2w-americanas-teste](https://console.cloud.google.com/storage/browser/b2w-americanas-teste?project=b2w-americanas-teste) movidos para o bucket [b2w-americanas-teste-bucket-navi-out](https://console.cloud.google.com/storage/browser/b2w-americanas-teste-bucket-navi-out?project=b2w-americanas-teste)
 
 
 ### 5. Implementação
