@@ -12,7 +12,7 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 #### 2. Motivação da Proposta
 #### 3. Execução da pipeline
 #### 4. Implementação
-#### 5. Referencias
+#### 5. Referências
 
 ### 1. Arquitetura Proposta
 
@@ -180,7 +180,7 @@ where page_type = 'thankyou') thankyou
 ##### Dashboard principal
 ![alt text](datastudio2.png "Imagem datastudio")
 
-### 5 Referencias
+### 5 Referências
 
 #### gcp-batch-ingestion-pipeline-python
 https://github.com/servian/gcp-batch-ingestion-pipeline-python
