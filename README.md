@@ -79,7 +79,7 @@ gsutil cp -p gs://b2w-americanas-teste-bucket-navi-temp/dados_navegacionais_p1.c
 
 3.5. Veja que a pipeline foi iniciada no [Google Dataflow](https://console.cloud.google.com/dataflow?project=b2w-americanas-teste&folder&organizationId), aguarde o job finalizar.
 
-3.6. Veja a tabela de kpi ser atualizada [BigQuery](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721), veja tambem a [tabela com todos os dados](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d)
+3.6. Veja a tabela [b2w-americanas-teste.dataNavigationDataSet.RAW_DATA_NAVIGATION](https://console.cloud.google.com/bigquery?sq=369773693133:4c76b9581da4490bb87c72b0c7e6222d) atualizada, assim como os [KPIs](https://console.cloud.google.com/bigquery?sq=369773693133:031bde7c38fe4164af00c6c6921d5721).
 
 3.7. Veja os arquivos processados foram apagadas do bucket [b2w-americanas-teste](https://console.cloud.google.com/storage/browser/b2w-americanas-teste?project=b2w-americanas-teste) movidos para o bucket [b2w-americanas-teste-bucket-navi-out](https://console.cloud.google.com/storage/browser/b2w-americanas-teste-bucket-navi-out?project=b2w-americanas-teste)
 
