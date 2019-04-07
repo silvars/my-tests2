@@ -23,13 +23,12 @@ KPIs importantes como taxa de conversão, taxa de abandono de carrinho de compra
 
 A arquitetura tem o seguinte fluxo principal:
 
-1. Existem a função [index.js](index.js) no [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br).
-2. Que fica monitorando o bucket b2w-americanas-teste a procura por novos arquivos adicionados no [Google Storage](https://cloud.google.com/storage/?hl=pt-Br)
-3. Essa função tem uma trigger que é informada quando um novo arquivo é adicionado no bucket, logo, acionando o orquestrador [simple_load_dag.py](simple_load_dag.py) no [Google Composer](https://cloud.google.com/composer/?hl=pt-br) 
-4. Que executa o script python [storage-to-dataflow-to-bigquery.py](storage-to-dataflow-to-bigquery.py) no [Google DataFlow](https://cloud.google.com/dataflow/?hl=pt-br)
-5. Inserindo os do CSV na tabela b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br), movendo o CSV para o bucket b2w-americanas-teste-bucket-navi-out.   
-6. Foi criada a view [SalesKPI.sql](SalesKPI.sql) no [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) com indicadores relevantes para o projeto, sendo essa view lida no nesse exemplo é um job em Python, que pega os arquivos CSVs adicionados no bucket do , transforma no formato reconhecido e adiciona na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br). 
-7. Essa view é acessada pelo Google [DataStudio](https://datastudio.google.com/) gerando [relatório](datastudio2.png) e os [indicadores](datastudio.png).
+1. A função [index.js](index.js) no [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br) fica monitorando o bucket b2w-americanas-teste a procura por novos arquivos adicionados no [Google Storage](https://cloud.google.com/storage/?hl=pt-Br)
+2. Essa função tem uma trigger que é informada quando um novo arquivo é adicionado no bucket, logo, acionando o orquestrador [simple_load_dag.py](simple_load_dag.py) no [Google Composer](https://cloud.google.com/composer/?hl=pt-br).  
+3. [Google Composer](https://cloud.google.com/composer/?hl=pt-br) executa o script python [storage-to-dataflow-to-bigquery.py](storage-to-dataflow-to-bigquery.py) no [Google DataFlow](https://cloud.google.com/dataflow/?hl=pt-br), que é a nossa pipeline,  que pega os arquivos CSVs adicionados no bucket transforma no formato conhecido e adiciona na tabela do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br).
+4. Inserindo os do CSV na tabela b2w-americanas-teste:dataNavigationDataSet.RAW_DATA_NAVIGATION do [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br), dando tudo certo, o [Google Composer](https://cloud.google.com/composer/?hl=pt-br), move o CSV para o bucket b2w-americanas-teste-bucket-navi-out.   
+5. A view [SalesKPI.sql](SalesKPI.sql) criada [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) possui indicadores relevantes para o projeto.
+6. Essa view é acessada pelo Google [DataStudio](https://datastudio.google.com/) gerando [relatório](datastudio2.png) e os [indicadores](datastudio.png).
 
 ### 1.3 Breve descrição de cada step na sua ordem de chamada, com seu devido google marketing.
 + [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), nosso storage aonde colocaremos nossos arquivos CSV para serem processados.
@@ -53,9 +52,9 @@ Cobre requisitos do cliente e outros como escalabilidade sob demanda, modelo de 
 ### 2.1 Motivação Pessoal para Arquitetura
 
 ##### 2.1.1 Porque desenhar toda solução na núvem e não localmente ?
-Como meu computador não é muito, experimentar qualquer solução localmente seria lastimável. 
+Como meu computador não é muito bom, experimentar qualquer solução localmente seria lastimável. 
 ##### 2.1.2 Porque utilizando o Google Cloud ?
-Escolhi o google por já ter bastante contato toda solução Cloud do [Firebase](https://firebase.google.com) para um projeto pessoal com IONIC. Também porque eu ganhei um voucher por 6 meses para utilizar todos o serviços do Google Cloud gratuitamente.
+Escolhi o google por já ter bastante contato toda solução Cloud do [Firebase](https://firebase.google.com), inclusive o Functions para um projeto pessoal com IONIC. Também porque eu ganhei um voucher por 6 meses para utilizar todos o serviços do Google Cloud gratuitamente.
 ##### 2.1.3 Porque utilizar Python e não Java ?
 Porque Java eu já tenho bastante experiência e Python para esse tipo de projeto eu teria um código mais limpo.
 ##### 2.1.4 Porque utilizar Google DataStudio ?
