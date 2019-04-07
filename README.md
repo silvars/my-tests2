@@ -66,7 +66,7 @@ Siga os passos abaixo aonde iremos simular toda execução da pipeline inserindo
 
 Acesse os links abaixo utilizando o usuário e senha fornecido por email.
 
-3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true) utilizando o 
+3.1 Acesse o [cloud terminal shell](https://console.cloud.google.com/cloudshell/editor?project=b2w-americanas-teste&shellonly=true&fromcloudshell=true).
 
 3.2. Execute o seguinte comando para copiar um CSV da pasta do bucket temp para a pasta que esta sendo monitorada pelo Cloud Functions:
 ```console
