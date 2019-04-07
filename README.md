@@ -30,7 +30,7 @@ A arquitetura tem o seguinte fluxo principal:
 5. A view [SalesKPI.sql](SalesKPI.sql) criada [BigQuery](https://cloud.google.com/bigquery/?hl=pt-br) possui indicadores relevantes para o projeto.
 6. Essa view é acessada pelo Google [DataStudio](https://datastudio.google.com/) gerando [relatório](datastudio2.png) e os [indicadores](datastudio.png).
 
-### 1.3 Breve descrição de cada step na sua ordem de chamada, com seu devido google marketing.
+#### 1.3 Breve descrição de cada step na sua ordem de chamada, com seu devido google marketing.
 + [Google Storage](https://cloud.google.com/storage/?hl=pt-Br), nosso storage aonde colocaremos nossos arquivos CSV para serem processados.
 > Armazenamento unificado de objetos para desenvolvedores e empresas
 + [Google Cloud Functions](https://cloud.google.com/functions/features/?hl=pt-br), nossa trigger que avisa quando um novo arquivo for adicinado no bucket. 
@@ -49,7 +49,7 @@ Para essa essa arquitetura priorizamos não obrigar instalar nenhuma biblioteca 
 Cobre requisitos do cliente e outros como escalabilidade sob demanda, modelo de programação simplificado e opensource, controle de custo, gerenciamento automático de recursos, que conforme a google diz:
 > "Recursos praticamente ilimitados".
 
-### 2.1 Motivação Pessoal para Arquitetura
+#### 2.1 Motivação Pessoal para Arquitetura
 
 ##### 2.1.1 Porque desenhar toda solução na núvem e não localmente ?
 Como meu computador não é muito bom, experimentar qualquer solução localmente seria lastimável. 
